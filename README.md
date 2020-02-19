@@ -86,7 +86,7 @@ for music in results:
 - **url**：歌曲音频文件链接
 - **id**：歌曲id
 - **name**：歌曲名称
-- **rtist**：歌手名称
+- **artist**：歌手名称
 - **artistId**: 歌手id
 - **album**：专辑名称
 - **albumId**: 专辑id
@@ -97,7 +97,7 @@ for music in results:
 
 #### 2.Music对象方法
 - #### `download(dirs, level)` 
-   >***dirs***：可选。下载保持路径。默认为当前文件夹内创建的新的cloudmusic文件夹。</br>
+   >***dirs***：可选。下载保存路径。默认为当前文件夹内创建的新的cloudmusic文件夹。 
   ***level***：可选，字符型。默认higher。下载品质，有且只有四种选择：standard，higher，exhigh，lossless。
 
    下载歌曲，返回值为下载绝对路径
@@ -106,14 +106,14 @@ for music in results:
 - #### `getHotComments(number)` 
   >***number***：可选，整型，默认为15。希望获取的评论个数。上限为15个。
 
-  获取热评。返回值为列表，列表元素为字典，字典内容：</br>
-  *"likeCount"：获赞数*</br>
-  *"content"：评论内容*</br>
-  *"time"：评论时间*</br>
-  *"userId"：用户id*</br>
-  *"nickNamd"：用户昵称*</br>
-  *"avatarUrl"：用户头像url*</br>
-  *"vipType"：0表示未开通vip，10表示开通音乐包，11表示开通黑胶*</br>
+  获取热评。返回值为列表，列表元素为字典，字典内容： 
+  *"likeCount"：获赞数* 
+  *"content"：评论内容* 
+  *"time"：评论时间* 
+  *"userId"：用户id* 
+  *"nickNamd"：用户昵称* 
+  *"avatarUrl"：用户头像url* 
+  *"vipType"：0表示未开通vip，10表示开通音乐包，11表示开通黑胶* 
   *"userType"：0表示普通用户，非0表示特殊用户（明星，丁磊，网红，小秘书等）*
 
 
@@ -143,7 +143,7 @@ for music in results:
   通过歌单id生成music对象，参数为歌单id，返回值为歌单内所有歌曲对应music对象组成的列表。
 
 - #### `search(content, number)`
-  >***content***：必须，字符型。搜索关键字。</br>
+  >***content***：必须，字符型。搜索关键字。 
   ***number***：可选，整形，搜索结果个数，默认为5。
 
   通过关键词搜索获取music对象。返回值为music对象组成的列表。
@@ -176,20 +176,20 @@ for music in results:
 #### 2.User对象方法
 
 - #### `getPlaylist()`
-  获取用户创建和收藏的全部歌单，返回值为一个列表，每个元素是一个歌单信息组成的字典。字典内容：</br>
-  *id：歌单id；*</br>
-  *name：歌单名称；*</br>
-  *creatorId：创建者id；*</br>
-  *createTime：创建时间；*</br>
-  *coverImgUrl：歌单封面图片url；*</br>
-  *updateTime：歌单最后一次更新时间；*</br>
+  获取用户创建和收藏的全部歌单，返回值为一个列表，每个元素是一个歌单信息组成的字典。字典内容： 
+  *id：歌单id；* 
+  *name：歌单名称；* 
+  *creatorId：创建者id；* 
+  *createTime：创建时间；* 
+  *coverImgUrl：歌单封面图片url；* 
+  *updateTime：歌单最后一次更新时间；* 
   *tags：歌单所属音乐风格，列表形式*
 
 - #### `getRecord(recordType)`
   >***recordType***: 可选。默认为0。为0返回所有时间排行，非0返回最近一周排行。
 
-  获取用户听歌排行，返回一个列表，元素为字典。字典内容：</br>
-  *score：分值。100表示听歌次数最多，越小越少；*</br>
+  获取用户听歌排行，返回一个列表，元素为字典。字典内容： 
+  *score：分值。100表示听歌次数最多，越小越少；* 
   *music：Music对象*
 
 #### 3.获取User对象函数
