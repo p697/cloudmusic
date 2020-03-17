@@ -106,7 +106,13 @@ class Music:
     # 获取歌词
     def getLyrics(self):
         lrc =  api.Api().get_lyrics(dict(ID = self.id))
-        lyric = lrc["lrc"]["lyric"]
-        tlyric = lrc["tlyric"]["lyric"]
+        lyric = ""
+        tlyric = ""
+        
+        if "lrc" in lrc:
+            lyric = lrc["lrc"]["lyric"]
+            if "lyric" in lrc["tlyric"]:
+                tlyric = lrc["tlyric"]["lyric"]
+
         return [lyric, tlyric]
 
