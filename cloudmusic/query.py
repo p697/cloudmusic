@@ -22,6 +22,7 @@ def post(url, headers, data):
                 ids.append(li["id"])
             return ids
         else:
+            # print(res.text)
             return json.loads(res.text)
     else:
         return "请求出错"

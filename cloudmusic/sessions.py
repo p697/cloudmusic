@@ -45,7 +45,7 @@ class Session():
 
         # 歌单                        
         elif clas == "playlist" :
-            playlist = self.api.get_playlist(dict(ID = ids[0]))["playlist"]["tracks"]
+            playlist = self.api.get_playlist(dict(ID = ids[0], method = "linux"))["playlist"]["tracks"]
             ids = [ml["id"] for ml in playlist]
             musicList = self.request("song", ids)
             musicListc = []

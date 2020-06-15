@@ -20,12 +20,14 @@ import urllib.request
 # for com in comments:
 #     print(com['content'])
 #     print(com['likeCount'])
+musiclist = cloudmusic.getPlaylist(362246091)
 
-user = cloudmusic.getUser(11898913)
+# 循环输出每个Music对象的评论数
+for music in musiclist:
+    print(music.name)
+    print(music.getCommentsCount())
 
-print(user.getRecord(1))
-
-
+print(len(musiclist))
 
 
 

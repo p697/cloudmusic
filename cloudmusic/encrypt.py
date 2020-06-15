@@ -14,8 +14,10 @@ MODULUS = (
 PUBKEY = "010001"
 NONCE = b"0CoJUm6Qyw8W8jud"
 
-def encrypted_request(text={}):
+def encrypted_request(text={}, method=''):
     # type: (str) -> dict
+    if method == 'linux':
+        return linuxEncrypt(text)
     text = str(text)
     data = text.encode("utf-8")
     secret = create_key(16)
@@ -40,3 +42,10 @@ def rsa(text, pubkey, modulus):
 
 def create_key(size):
     return binascii.hexlify(os.urandom(size))[:16]
+
+
+def linuxEncrypt(text={}):
+    # print(text)
+    return text
+
+
