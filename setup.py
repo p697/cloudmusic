@@ -18,7 +18,7 @@ URL = 'https://github.com/p697/cloudmusic'
 EMAIL = '254139147@qq.com'
 AUTHOR = 'p697'
 REQUIRES_PYTHON = '>=3.0.0'
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
