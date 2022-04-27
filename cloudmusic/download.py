@@ -1,9 +1,9 @@
 from . import musicObj
-
-import urllib
 import os
+import urllib
 import threadpool
 import time
+import sys
 
 
 
@@ -14,16 +14,31 @@ def download(dirs, music):
 		artist = ""
 		for ar in music.artist:
 			artist += ar + " "
+	music.name = music.name.replace("/", "&")
+	music.name = music.name.replace("*", "&")
+	if not artist is None:
+		artist = artist.replace("/", "&")
+		artist = artist.replace("*", "&")
 	name = music.name + " - " + artist + "." + music.type
 
 	if not dirs:
-		dirs = "cloudmusic\\" + name
-		defalut_dirs = str(os.getcwd()) + '\\cloudmusic'
+
+		if sys.platform == "darwin":
+			path1 = "cloudmusic/"
+			path2 = "/cloudmusic"
+			path3 = "/"
+		else :
+			path1 = "cloudmusic\\"
+			path2 = "\\cloudmusic"
+			path3 = "\\"
+
+		dirs = path1 + name
+		defalut_dirs = str(os.getcwd()) + path2
 		isExist = os.path.exists(defalut_dirs)
 		if not isExist:
 			os.makedirs(defalut_dirs)
 	else :
-		dirs += "\\" + name
+		dirs += path3 + name
 
 	# 超时重连
 	for t in range(5):
