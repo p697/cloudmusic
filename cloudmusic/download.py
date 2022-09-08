@@ -45,7 +45,7 @@ def download(dirs, music):
 
 	print("dowload finish - " + music.id)
 
-	return str(os.getcwd()) + dirs
+	return os.path.join(os.getcwd(), dirs)
 
 
 class Downloader():
