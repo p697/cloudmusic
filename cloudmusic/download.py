@@ -18,7 +18,7 @@ def download(dirs, music):
 	name = re.sub(r'[\\/*?:"<>|]', " ", name)
 
 	if not dirs:
-		dirs = os.path.join('cloudmusic', 'name')
+		dirs = os.path.join('cloudmusic', name)
 		defalut_dirs = os.path.join(os.getcwd() , 'cloudmusic')
 		isExist = os.path.exists(defalut_dirs)
 		if not isExist:
@@ -54,7 +54,7 @@ def download(dirs, music):
 	except Exception as e:
 		print("set tags failed - " + music.id)
 		print("Error: " + str(e))
-		
+
 	print("dowload finish - " + music.id)
 
 	return os.path.join(os.getcwd(), dirs)
