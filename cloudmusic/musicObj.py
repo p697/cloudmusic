@@ -75,7 +75,7 @@ class Music:
             if level == "standard":
                 return download.download(dirs, self)
             elif level in self.levels:
-                return createObj([self.id], level).download()
+                return createObj([self.id], level).download(dirs)
             else:
                 print("没有这个level, 默认standard")
                 return download.download(dirs, self)
