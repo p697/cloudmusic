@@ -1,10 +1,10 @@
 from . import musicObj
-
+from . import setTags
 import urllib
 import os
 import threadpool
 import time
-
+import re
 
 
 def download(dirs, music):
@@ -15,15 +15,16 @@ def download(dirs, music):
 		for ar in music.artist:
 			artist += ar + " "
 	name = music.name + " - " + artist + "." + music.type
+	name = re.sub(r'[\\/*?:"<>|]', " ", name)
 
 	if not dirs:
-		dirs = "cloudmusic\\" + name
-		defalut_dirs = str(os.getcwd()) + '\\cloudmusic'
+		dirs = os.path.join('cloudmusic', name)
+		defalut_dirs = os.path.join(os.getcwd() , 'cloudmusic')
 		isExist = os.path.exists(defalut_dirs)
 		if not isExist:
 			os.makedirs(defalut_dirs)
 	else :
-		dirs += "\\" + name
+		dirs = os.path.join(dirs, name)
 
 	# 超时重连
 	for t in range(5):
@@ -43,9 +44,20 @@ def download(dirs, music):
 	binfile.write(respHtml)
 	binfile.close()
 
+	try:
+		if music.type == "mp3":
+			setTags.set_tags_for_mp3(dirs, music.picUrl, artist, music.album, music.name)
+		elif music.type == 'm4a':
+			setTags.set_tags_for_m4a(dirs, music.picUrl, artist, music.album, music.name)
+		elif music.type == 'flac':
+			setTags.set_tags_for_flac(dirs, music.picUrl, artist, music.album, music.name)
+	except Exception as e:
+		print("set tags failed - " + music.id)
+		print("Error: " + str(e))
+
 	print("dowload finish - " + music.id)
 
-	return str(os.getcwd()) + dirs
+	return os.path.join(os.getcwd(), dirs)
 
 
 class Downloader():
