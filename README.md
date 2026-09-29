@@ -4,9 +4,15 @@
 
 支持 Python 3.10–3.14。保留 `getMusic()`、`getPlaylist()`、`search()` 等原有调用方式。
 
-> 仓库维护版本为 **0.2.0**。在发布到 PyPI 之前，`pip install cloudmusic` 仍可能安装旧的 0.1.1。请按下面的源码安装方式使用当前版本。历史 HTML/PDF 文档对应 0.1.1，当前接口以本 README 为准。
+> 当前维护版本为 **0.2.0**。历史 HTML/PDF 文档对应 0.1.1，当前接口以本 README 为准。
 
 ## 安装
+
+```bash
+python -m pip install --upgrade cloudmusic
+```
+
+也可以从源码安装：
 
 ```bash
 git clone https://github.com/p697/cloudmusic.git
@@ -181,7 +187,12 @@ python -m pytest --live --cookie-env NETEASE_COOKIE -m live -v --tb=short
 - 下载默认沿用对象品质；明确传入 `level="standard"` 时会请求该品质。
 - 错误不再以字符串、打印信息、`None` 或意外 `KeyError` 混合返回；请处理相应异常。
 - `query.py` 内部旧 HTML 抓取函数已移除。内部模块不是稳定 API。
-- 尚未自动发布到 PyPI。
+
+## 发布维护版本
+
+维护者在 GitHub Actions 手动运行 `Publish to PyPI`，选择 `master` 并填写与源码一致的版本号。流程先执行跨平台 CI，再构建、检查和独立安装分发包，最后通过 PyPI Trusted Publishing 上传；无需保存长期 API token。
+
+PyPI 的可信发布者配置为仓库 `p697/cloudmusic`、工作流 `release.yml`、环境 `pypi`。发布环境仅允许 `master` 分支。修改版本号后应先通过 PR 合并，再启动发布。
 
 历史贡献参考：[PR #14](https://github.com/p697/cloudmusic/pull/14)、[PR #17](https://github.com/p697/cloudmusic/pull/17)、[PR #21](https://github.com/p697/cloudmusic/pull/21)。本轮吸收了跨平台路径和音质目录传递的修复方向；封面/标签写入功能暂未纳入。
 
