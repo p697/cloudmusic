@@ -35,12 +35,12 @@ def download(dirs, music, *, audio=None):
         raise UnavailableError("当前账号或地区无法获取音频：{}".format(music.id))
     if not isinstance(url, str) or not url.startswith(("https://", "http://")):
         raise DownloadError("音频地址必须是 HTTP 或 HTTPS")
-    target_dir = Path(dirs or "cloudmusic").expanduser().resolve()
-    target_dir.mkdir(parents=True, exist_ok=True)
-    target = target_dir / _filename(music, audio.get("type"))
     temporary = None
     options = music._options
     try:
+        target_dir = Path(dirs or "cloudmusic").expanduser().resolve()
+        target = target_dir / _filename(music, audio.get("type"))
+        target_dir.mkdir(parents=True, exist_ok=True)
         # Never forward account cookies to a CDN or to a redirect destination.
         with requests.Session() as session:
             session.proxies.update(options.get("proxies") or {})
@@ -73,6 +73,8 @@ def download(dirs, music, *, audio=None):
         return str(target)
     except requests.RequestException as exc:
         raise DownloadError("音频下载失败或超时，未覆盖目标文件") from exc
+    except OSError as exc:
+        raise DownloadError("音频文件写入失败，请检查目录权限和剩余空间") from exc
     finally:
         if temporary is not None:
             temporary.unlink(missing_ok=True)

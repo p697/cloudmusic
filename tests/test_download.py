@@ -134,3 +134,29 @@ def test_batch_loader_success_and_failure(monkeypatch, tmp_path):
     assert not loader.results and not loader.errors
     with pytest.raises(ValueError):
         cloudmusic.createLoader(0)
+
+
+def test_failed_atomic_replace_preserves_old_file(server, tmp_path, monkeypatch):
+    value = music(server[0] + "/ok")
+    target = tmp_path / _filename(value, "mp3")
+    target.write_bytes(b"keep existing")
+
+    def fail_replace(*args):
+        raise PermissionError("destination locked")
+
+    monkeypatch.setattr("cloudmusic.download.os.replace", fail_replace)
+    with pytest.raises(DownloadError) as caught:
+        value.download(tmp_path)
+    assert isinstance(caught.value.__cause__, PermissionError)
+    assert target.read_bytes() == b"keep existing"
+    assert list(tmp_path.iterdir()) == [target]
+
+
+def test_unwritable_directory_has_actionable_error(tmp_path, monkeypatch):
+    def deny(*args, **kwargs):
+        raise PermissionError("read only")
+
+    monkeypatch.setattr(Path, "mkdir", deny)
+    with pytest.raises(DownloadError) as caught:
+        music("https://example.invalid/audio").download(tmp_path / "denied")
+    assert isinstance(caught.value.__cause__, PermissionError)
