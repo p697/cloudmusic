@@ -14,11 +14,13 @@ MODULUS = (
 PUBKEY = "010001"
 NONCE = b"0CoJUm6Qyw8W8jud"
 
-def encrypted_request(text={}, method=''):
-    # type: (str) -> dict
-    if method == 'linux':
+
+def encrypted_request(text=None, method=""):
+    text = {} if text is None else text
+    if method == "linux":
         return linuxEncrypt(text)
-    text = str(text)
+    if not isinstance(text, str):
+        text = json.dumps(text, ensure_ascii=False, separators=(",", ":"))
     data = text.encode("utf-8")
     secret = create_key(16)
     params = aes(aes(data, NONCE), secret)
@@ -44,8 +46,5 @@ def create_key(size):
     return binascii.hexlify(os.urandom(size))[:16]
 
 
-def linuxEncrypt(text={}):
-    # print(text)
-    return text
-
-
+def linuxEncrypt(text=None):
+    return {} if text is None else text

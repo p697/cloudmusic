@@ -1,53 +1,11 @@
+"""Small manual example. Automated tests live in tests/ and never run this file."""
+
 import cloudmusic
-import time
-import re
-import urllib.request
-
-# playlist = api.getSong(445702291)
-# 601776277 是我的一个歌单id
-# print(playlist)
-# [<Music object - 445702291>, <Music object - 27198683>, <Music object - 27198679>, <Music object - 1868496>, <Music object - 26857076>, <Music object - 27198673>, <Music object - 27198672>, <Music object - 27198671>, <Music object - 1868520>, <Music object - 1868553>, <Music object - 486069583>, <Music object - 27198663>, <Music object - 1869285>, <Music object - 27198691>, <Music object - 1868483>]
-# 每个Music object包含属性：url(音频文件链接)，level(品质)，tyoe(格式)，id(歌曲id)，name(歌曲名)，aitist(歌手)，album(所属专辑)，size(音频文件大小)
-# 每个Music object包含方法：1.download()下载到本地   2.review()获取详细评论
 
 
-# music = cloudmusic.getMusic(1381755293)
-
-# print(music.getCommentCount())
-
-# comments = music.getHotComments()
-
-# for com in comments:
-#     print(com['content'])
-#     print(com['likeCount'])
-musiclist = cloudmusic.getPlaylist(362246091)
-
-# 循环输出每个Music对象的评论数
-for music in musiclist:
-    print(music.name)
-    print(music.getCommentsCount())
-
-print(len(musiclist))
-
-
-
-
-
-
-# loader = api.createLoader()
-
-# loader.data = musicList
-
-# if __name__ == "__main__":
-#     loader.start()
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    try:
+        for music in cloudmusic.search("白日", 5):
+            print(music.id, music.name)
+    except cloudmusic.CloudMusicError as error:
+        print(error)
